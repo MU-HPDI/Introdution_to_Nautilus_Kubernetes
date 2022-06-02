@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-python-SSO
+spec:
+  containers:
+  - name: mypod
+    image: python
+    workingDir: /
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 1Gi
+        cpu: 1
+    command: ["sh", "-c", "echo 'Im a new pod' && sleep infinity"]

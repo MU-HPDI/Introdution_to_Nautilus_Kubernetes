@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-data-download-sso
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: pod-data-download-sso
+        image: gitlab-registry.nrp-nautilus.io/aomqc/umc_dsa_8430_sp2022_image:latest
+        command: ["/bin/sh","-c"]
+        args:
+        - cp -r /anes/* /update/
+        volumeMounts:
+        - mountPath: /anes
+          name: source
+        - mountPath: /update
+          name: destination 
+        resources:
+            limits:
+              memory: 10Gi
+              cpu: "4"
+            requests:
+              memory: 10Gi
+              cpu: "4"     
+      volumes:
+      - name: source
+        persistentVolumeClaim:
+          claimName: paralleldata
+      - name: destination
+        persistentVolumeClaim:
+          claimName: parallelanes
+      restartPolicy: Never      
+  backoffLimit: 0

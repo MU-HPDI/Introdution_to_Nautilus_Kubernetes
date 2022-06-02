@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-unet-train-0
+spec:
+  template:
+    spec:
+      containers:
+      - name: pod-unet-train-0
+        image: gitlab-registry.nrp-nautilus.io/aomqc/umc_dsa_8430_sp2022_image:latest
+        workingDir: persistentVolume_name/exercise/umc_dsa_8430_sp2022_data
+        command: ["/bin/sh","-c"]
+        args:
+        - python3 U_Net_training.py 0
+        volumeMounts:
+        - name: persistentVolume_name
+          mountPath: /persistentVolume_name
+        resources:
+            limits:
+              memory: 20Gi
+              cpu: 1
+              nvidia.com/gpu: 1
+            requests:
+              memory: 20Gi
+              cpu: 1
+              nvidia.com/gpu: 1
+      volumes:
+      - name: persistentVolume_name 
+        persistentVolumeClaim:
+            claimName: persistentVolume_name
+      restartPolicy: OnFailure      
+  backoffLimit: 

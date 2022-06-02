@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-scottgs
+spec:
+  containers:
+  - name: pod-scottgs
+    image: gitlab-registry.nrp-nautilus.io/aomqc/umc_dsa_8430_sp2022_image:latest
+    command: ["sh", "-c", "echo 'Im a new pod' && sleep infinity"]
+    resources:
+      limits:
+        memory: 12Gi
+        cpu: 2
+        nvidia.com/gpu: 1
+      requests:
+        memory: 10Gi
+        cpu: 2
+        nvidia.com/gpu: 1
+    volumeMounts:
+    - mountPath: /data
+      name: scottgs-pv
+  volumes:
+    - name: scottgs-pv
+      persistentVolumeClaim:
+        claimName: scottgs-pv
