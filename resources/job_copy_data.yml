@@ -30,6 +30,6 @@ spec:
           claimName: paralleldata
       - name: destination
         persistentVolumeClaim:
-          claimName: parallelanes
+          claimName: parallelSSO
       restartPolicy: Never      
   backoffLimit: 0
