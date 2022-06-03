@@ -11,11 +11,11 @@ spec:
         image: gitlab-registry.nrp-nautilus.io/aomqc/umc_dsa_8430_sp2022_image:latest
         command: ["/bin/sh","-c"]
         args:
-        - cp -r /anes/* /update/
+        - cp -r /anes/* /data/
         volumeMounts:
         - mountPath: /anes
           name: source
-        - mountPath: /update
+        - mountPath: /data
           name: destination 
         resources:
             limits:
@@ -30,6 +30,6 @@ spec:
           claimName: paralleldata
       - name: destination
         persistentVolumeClaim:
-          claimName: parallelanes
+          claimName: parallelSSO
       restartPolicy: Never      
   backoffLimit: 0
